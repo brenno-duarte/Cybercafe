@@ -1,0 +1,44 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Notícias</h1>
+
+    <div>
+        <a href="{{ path_for('noticiasCadastrar') }}" class="btn btn-success">Nova notícia</a>
+    </div>
+    
+    <div class="margem">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Notícia</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Ponto Físico</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news in noticias %}
+                <tr>
+                    <td>{{ news.id_noticia }}</td>
+                    <td>{{ news.noticia }}</td>
+                    <td>{{ news.dta_noticia }}</td>
+                    <td>{{ news.usuario }}</td>
+                    <td>{{ news.ponto_fisico }}</td>
+                    <td>
+                        <a href="{{ path_for('noticiasAlterar', { 'id': news.id_noticia }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('noticiasDeletar', { 'id': news.id_noticia }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Pontos Físicos</h1>
+
+    <div>
+        <a href="{{ path_for('pontosCadastrar') }}" class="btn btn-success">Novo Ponto</a>
+    </div>
+    
+    <div class="margem">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">CNPJ</th>
+                    <th scope="col">Nome comercial</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Contrato</th>
+                    <th scope="col">Máquinas ativas</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for valor in ponto %}
+                <tr>
+                    <td>{{ valor.id_ponto }}</td>
+                    <td>{{ valor.cnpj }}</td>
+                    <td>{{ valor.nome_comercial }}</td>
+                    <td>{{ valor.tipo }}</td>
+                    <td>{{ valor.contrato }}</td>
+                    <td>{{ valor.maquinas_ativas }}</td>
+                    <td>
+                        <a href="{{ path_for('pontosAlterar', { 'id': valor.id_ponto }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('noticiasDeletar', { 'id': news.id_noticia }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

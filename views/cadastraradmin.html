@@ -1,0 +1,22 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Cadastrar Administrador</h1>
+
+    <form method="POST" action="{{ path_for('cadastrarAdmin') }}">
+        <div class="form-group">
+            <label for="usuario">Usuário</label>
+            <input type="text" class="form-control" id="usuario" name="usuario">
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha">
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</section>
+
+{% endblock %}

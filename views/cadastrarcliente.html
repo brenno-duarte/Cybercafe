@@ -1,0 +1,32 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Cadastrar Cliente</h1>
+
+    <form method="POST" action="{{ path_for('cadastrarClientes') }}">
+        <div class="form-group">
+            <label for="Nome">Nome</label>
+            <input type="text" class="form-control" id="Nome" name="nome">
+        </div>
+        <div class="form-group">
+            <label for="CPF">CPF</label>
+            <input type="text" class="form-control" id="CPF" name="cpf">
+        </div>
+        <div class="form-group">
+            <label for="Ponto">Ponto registrado</label>
+            <input type="text" class="form-control" id="Ponto" name="ponto">
+        </div>
+
+        <label for="vip">VIP</label>
+        <select class="form-control" name="vip">
+            <option value="Sim">Sim</option>
+            <option value="Nao">Não</option>
+        </select>
+    
+        <button type="submit" class="btn btn-primary margem">Salvar</button>
+    </form>
+</section>
+
+{% endblock %}

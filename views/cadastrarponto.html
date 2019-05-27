@@ -1,0 +1,45 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Cadastrar Ponto</h1>
+
+    <form method="POST" action="{{ path_for('pontosCadastrar') }}">
+        <div class="form-group">
+            <label for="cnpj">CNPJ</label>
+            <input type="text" class="form-control" id="cnpj" name="cnpj">
+        </div>
+
+        <div class="form-group">
+            <label for="comercial">Nome Comercial</label>
+            <input type="text" class="form-control" id="comercial" name="comercial">
+        </div>
+
+        <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select class="form-control" name="tipo">
+                <option value="Pequeno">Pequeno</option>
+                <option value="Medio">Médio</option>
+                <option value="Grande">Grande</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contrato">Contrato</label>
+            <select class="form-control" name="contrato">
+                <option value="Simples">Simples</option>
+                <option value="VIP">VIP</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="maquinas">Máquinas ativas</label>
+            <input type="text" class="form-control" id="maquinas" name="maquinas">
+        </div>
+    
+        <button type="submit" class="btn btn-primary margem">Salvar</button>
+    </form>
+</section>
+
+{% endblock %}

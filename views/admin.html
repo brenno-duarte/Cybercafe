@@ -1,0 +1,40 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Administradores</h1>
+
+    <div>
+        <a href="{{ path_for('cadastrarAdmin') }}" class="btn btn-success">Novo Administrador</a>
+    </div>
+    
+    <div class="margem">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Senha</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for users in admin %}
+                <tr>
+                    <td>{{ users.id_admin }}</td>
+                    <td>{{ users.usuario }}</td>
+                    <td>{{ users.senha }}</td>
+                    <td>
+                        <a href="{{ path_for('alterarAdmin', { 'id': users.id_admin }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('deletarAdmin', { 'id': users.id_admin }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
