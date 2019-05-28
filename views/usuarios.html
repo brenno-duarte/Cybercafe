@@ -6,7 +6,7 @@
     <h1>Usuários</h1>
 
     <div>
-        <a href="#" class="btn btn-success">Novo Usuário</a>
+        <a href="{{ path_for('usuariosCadastro') }}" class="btn btn-success">Novo Usuário</a>
     </div>
     
     <div class="margem">
@@ -21,13 +21,17 @@
                 </tr>
             </thead>
             <tbody>
+                {% for users in usuarios %}
                 <tr>
-                <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td class="btn btn-outline-secondary">Editar</td>
-                    <td class="btn btn-outline-danger">Excluir</td>
+                    <td>{{ users.id_usuario }}</td>
+                    <td>{{ users.funcionarios }}</td>
+                    <td>{{ users.adm_ponto }}</td>
+                    <td>
+                        <a href="{{ path_for('usuariosAlterar', { 'id': users.id_usuario }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('usuariosDeletar', { 'id': users.id_usuario }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

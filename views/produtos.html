@@ -6,7 +6,7 @@
     <h1>Produtos</h1>
 
     <div>
-        <a href="#" class="btn btn-success">Novo Produto</a>
+        <a href="{{ path_for('produtosCadastro') }}" class="btn btn-success">Novo Produto</a>
     </div>
     
     <div class="margem">
@@ -24,16 +24,20 @@
                 </tr>
             </thead>
             <tbody>
+                {% for prod in produtos %}
                 <tr>
-                <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td class="btn btn-outline-secondary">Editar</td>
-                    <td class="btn btn-outline-danger">Excluir</td>
+                    <td>{{ prod.id_produto }}</td>
+                    <td>{{ prod.nome }}</td>
+                    <td>{{ prod.categoria }}</td>
+                    <td>{{ prod.tipo }}</td>
+                    <td>{{ prod.preco }}</td>
+                    <td>{{ prod.cliente }}</td>
+                    <td>
+                        <a href="{{ path_for('produtosAlterar', { 'id': prod.id_produto }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('produtosDeletar', { 'id': prod.id_produto }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

@@ -9,22 +9,15 @@ require 'rotas/rota-admin.php';
 require 'rotas/rota-cliente.php';
 require 'rotas/rota-noticia.php';
 require 'rotas/rota-pontos.php';
+require 'rotas/rota-produtos.php';
+require 'rotas/rota-usuario.php';
 
 $app->get('/', function ($request, $response, $args) {
-    return $this->view->render($response, 'login.html');
+    return $response->withRedirect($this->router->pathFor('dashboard'));
 })->setName('login');
 
 $app->get('/dashboard', function ($request, $response, $args) {
     return $this->view->render($response, 'dashboard.html');
 })->setName('dashboard');
-
-
-$app->get('/produtos', function ($request, $response, $args) {
-    return $this->view->render($response, 'produtos.html');
-})->setName('produtos');
-
-$app->get('/usuarios', function ($request, $response, $args) {
-    return $this->view->render($response, 'usuarios.html');
-})->setName('usuarios');
 
 $app->run();

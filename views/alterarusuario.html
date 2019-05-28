@@ -1,0 +1,22 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Alterar Usuário</h1>
+
+    <form method="POST" action="{{ path_for('usuariosAlterar', {'id': users.id_usuario}) }}">
+        <div class="form-group">
+            <label for="func">Funcionário</label>
+            <input type="text" class="form-control" id="func" name="func" value="{{ users.funcionarios }}">
+        </div>
+        <div class="form-group">
+            <label for="ponto">ADM Ponto</label>
+            <input type="text" class="form-control" id="ponto" name="ponto" value="{{ users.adm_ponto }}">
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Alterar</button>
+    </form>
+</section>
+
+{% endblock %}
