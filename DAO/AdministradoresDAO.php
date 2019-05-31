@@ -13,6 +13,26 @@ class AdministradoresDAO extends DB
         return $res;
     }
 
+    public function login(Administradores $admin){
+        $sql = "SELECT * FROM administradores WHERE usuario = :usuario AND senha = :senha";
+        $stmt = DB::prepare($sql);
+        $stmt->bindParam(':usuario', $admin->getUsuario());
+        $stmt->bindParam(':senha', $admin->getSenha());
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        if ($res > 0) {
+            $_SESSION['logado'] = true;
+            return true;
+        }
+    }
+
+    public function checarLogin(){
+        if (!$_SESSION['logado']) {
+            return $response->withRedirect($this->router->pathFor('login'));
+        }
+    }
+
     public function listarUnico(int $id){
         $sql = "SELECT * FROM administradores WHERE id_admin = $id";
         $stmt = DB::prepare($sql);

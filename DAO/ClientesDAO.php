@@ -13,6 +13,15 @@ class ClientesDAO extends DB
         return $res;
     }
 
+    public function listarN(){
+        $sql = "SELECT COUNT(*) as qnt FROM clientes_pontos";
+        $stmt = DB::prepare($sql);
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $res[0]['qnt'];
+    }
+
     public function listarUnico(int $id){
         $sql = "SELECT * FROM clientes_pontos WHERE id_cliente = $id";
         $stmt = DB::prepare($sql);

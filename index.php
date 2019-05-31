@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
@@ -11,13 +13,7 @@ require 'rotas/rota-noticia.php';
 require 'rotas/rota-pontos.php';
 require 'rotas/rota-produtos.php';
 require 'rotas/rota-usuario.php';
-
-$app->get('/', function ($request, $response, $args) {
-    return $response->withRedirect($this->router->pathFor('dashboard'));
-})->setName('login');
-
-$app->get('/dashboard', function ($request, $response, $args) {
-    return $this->view->render($response, 'dashboard.html');
-})->setName('dashboard');
+require 'rotas/rota-login.php';
+require 'rotas/rota-dash.php';
 
 $app->run();
