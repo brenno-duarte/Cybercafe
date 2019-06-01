@@ -21,7 +21,12 @@ $app->get('/produtos', function ($request, $response, $args) {
 $app->get('/produtosCadastro', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        return $this->view->render($response, 'cadastrarproduto.html');
+        $clienteDAO = new ClientesDAO();
+        $res = $clienteDAO->listar();
+
+        return $this->view->render($response, 'cadastrarproduto.html', [
+            'clientes' => $res
+        ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }
@@ -32,10 +37,13 @@ $app->get('/produtosAlterar/{id}', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
         $prodDAO = new ProdutosDAO();
+        $clienteDAO = new ClientesDAO();
         $res = $prodDAO->listarUnico($args['id']);
+        $res2 = $clienteDAO->listar();
         
         return $this->view->render($response, 'alterarproduto.html', [
-            'prod' => $res
+            'prod' => $res,
+            'clientes' => $res2
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));

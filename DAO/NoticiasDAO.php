@@ -5,7 +5,8 @@ require_once 'DB.php';
 class NoticiasDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM noticias_empresa";
+        $sql = "SELECT * FROM noticias_empresa a INNER JOIN pontos_fisicos b 
+        INNER JOIN usuarios_pontos c ON a.ponto_fisico=b.id_ponto AND a.usuario=c.id_usuario";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);

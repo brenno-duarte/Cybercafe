@@ -27,12 +27,6 @@ class AdministradoresDAO extends DB
         }
     }
 
-    public function checarLogin(){
-        if (!$_SESSION['logado']) {
-            return $response->withRedirect($this->router->pathFor('login'));
-        }
-    }
-
     public function listarUnico(int $id){
         $sql = "SELECT * FROM administradores WHERE id_admin = $id";
         $stmt = DB::prepare($sql);

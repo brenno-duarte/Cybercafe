@@ -21,7 +21,12 @@ $app->get('/usuarios', function ($request, $response, $args) {
 $app->get('/usuariosCadastro', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        return $this->view->render($response, 'cadastrarusuario.html');
+        $pontos = new PontosFisicosDAO();
+        $res = $pontos->listar();
+
+        return $this->view->render($response, 'cadastrarusuario.html', [
+            'pontos' => $res
+        ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }

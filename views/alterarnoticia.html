@@ -8,20 +8,24 @@
     <form method="POST" action="{{ path_for('noticiasAlterar', {'id': news.id_noticia}) }}">
         <div class="form-group">
             <label for="noticia">Notícia</label>
-            <input type="text" class="form-control" id="noticia" name="noticia_tema" value="{{ news.noticia }}">
+            <input type="text" class="form-control" id="noticia" name="noticia_tema" value="{{ news.noticia }}" required>
         </div>
         <div class="form-group">
             <label for="data">Data</label>
-            <input type="date" class="form-control" id="data" name="data" value="{{ news.dta_noticia }}">
+            <input type="date" class="form-control" id="data" name="data" value="{{ news.dta_noticia }}" required>
         </div>
         <div class="form-group">
             <label for="usuario">Usuário</label>
-            <input type="text" class="form-control" id="usuario" name="usuario" value="{{ news.usuario }}">
+            <input type="text" class="form-control" id="usuario" name="usuario" value="{{ news.usuario }}" required>
         </div>
 
         <div class="form-group"></div>
             <label for="ponto">Ponto Físico</label>
-            <input type="text" class="form-control" id="ponto" name="ponto" value="{{ news.ponto_fisico }}">
+            <select class="form-control" name="ponto">
+                {% for p in pontos %}
+                <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
+                {% endfor %}
+            </select>
         </div>
     
         <button type="submit" class="btn btn-primary margem">Alterar</button>

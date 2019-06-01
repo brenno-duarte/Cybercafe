@@ -27,11 +27,11 @@
                 {% for prod in produtos %}
                 <tr>
                     <td>{{ prod.id_produto }}</td>
-                    <td>{{ prod.nome }}</td>
+                    <td>{{ prod.nome_prod }}</td>
                     <td>{{ prod.categoria }}</td>
                     <td>{{ prod.tipo }}</td>
                     <td>{{ prod.preco }}</td>
-                    <td>{{ prod.cliente }}</td>
+                    <td>{{ prod.nome }}</td>
                     <td>
                         <a href="{{ path_for('produtosAlterar', { 'id': prod.id_produto }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('produtosDeletar', { 'id': prod.id_produto }) }}" class="btn btn-outline-danger">Excluir</a>

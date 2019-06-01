@@ -21,7 +21,12 @@ $app->get('/clientes', function ($request, $response, $args) {
 $app->get('/cadastrarClientes', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        return $this->view->render($response, 'cadastrarcliente.html');
+        $pontos = new PontosFisicosDAO();
+        $res = $pontos->listar();
+
+        return $this->view->render($response, 'cadastrarcliente.html', [
+            'pontos' => $res
+        ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }
@@ -33,9 +38,11 @@ $app->get('/AlterarClientes/{id}', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $clienteDAO = new ClientesDAO();
         $res = $clienteDAO->listarUnico($args['id']);
+        $res2 = $clienteDAO->listar();
 
         return $this->view->render($response, 'alterarcliente.html', [
-            'cliente' => $res
+            'cliente' => $res,
+            'pontos' => $res2
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));

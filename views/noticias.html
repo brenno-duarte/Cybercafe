@@ -27,9 +27,9 @@
                 <tr>
                     <td>{{ news.id_noticia }}</td>
                     <td>{{ news.noticia }}</td>
-                    <td>{{ news.dta_noticia }}</td>
-                    <td>{{ news.usuario }}</td>
-                    <td>{{ news.ponto_fisico }}</td>
+                    <td>{{ news.dta_noticia | date('d/m/Y') }}</td>
+                    <td>{{ news.funcionarios }}</td>
+                    <td>{{ news.nome_comercial }}</td>
                     <td>
                         <a href="{{ path_for('noticiasAlterar', { 'id': news.id_noticia }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('noticiasDeletar', { 'id': news.id_noticia }) }}" class="btn btn-outline-danger">Excluir</a>

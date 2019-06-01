@@ -8,27 +8,31 @@
     <form method="POST" action="{{ path_for('produtosAlterar', { 'id': prod.id_produto }) }}">
         <div class="form-group">
             <label for="nome">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome" value="{{ prod.nome }}">
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ prod.nome }}" required>
         </div>
 
         <div class="form-group">
             <label for="categoria">Categoria</label>
-            <input type="text" class="form-control" id="categoria" name="categoria"  value="{{ prod.categoria }}">
+            <input type="text" class="form-control" id="categoria" name="categoria"  value="{{ prod.categoria }}" required>
         </div>
 
         <div class="form-group">
             <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" id="tipo" name="tipo" value="{{ prod.tipo }}">
+            <input type="text" class="form-control" id="tipo" name="tipo" value="{{ prod.tipo }}" required>
         </div>
 
         <div class="form-group">
             <label for="preco">Preço</label>
-            <input type="text" class="form-control" id="preco" name="preco" value="{{ prod.preco }}">
+            <input type="text" class="form-control" id="preco" name="preco" value="{{ prod.preco }}" required>
         </div>
 
         <div class="form-group">
             <label for="cliente">Cliente</label>
-            <input type="text" class="form-control" id="cliente" name="cliente" value="{{ prod.cliente }}">
+            <select class="form-control" name="cliente">
+                {% for c in clientes %}
+                <option value="{{ c.id_cliente }}">{{ c.nome }}</option>
+                {% endfor %}
+            </select>
         </div>
     
         <button type="submit" class="btn btn-primary margem">Salvar</button>

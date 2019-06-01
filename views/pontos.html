@@ -34,7 +34,7 @@
                     <td>{{ valor.maquinas_ativas }}</td>
                     <td>
                         <a href="{{ path_for('pontosAlterar', { 'id': valor.id_ponto }) }}" class="btn btn-outline-secondary">Editar</a>
-                        <a href="{{ path_for('noticiasDeletar', { 'id': news.id_noticia }) }}" class="btn btn-outline-danger">Excluir</a>
+                        <a href="{{ path_for('pontosDeletar', { 'id': valor.id_ponto }) }}" class="btn btn-outline-danger">Excluir</a>
                     </td>
                 </tr>
                 {% endfor %}

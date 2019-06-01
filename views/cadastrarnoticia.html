@@ -8,20 +8,28 @@
     <form method="POST" action="{{ path_for('noticiasCadastrar') }}">
         <div class="form-group">
             <label for="noticia">Notícia</label>
-            <input type="text" class="form-control" id="noticia" name="noticia_tema">
+            <input type="text" class="form-control" id="noticia" name="noticia_tema" required>
         </div>
         <div class="form-group">
             <label for="data">Data</label>
-            <input type="date" class="form-control" id="data" name="data">
+            <input type="date" class="form-control" id="data" name="data" required>
         </div>
         <div class="form-group">
             <label for="usuario">Usuário</label>
-            <input type="text" class="form-control" id="usuario" name="usuario">
+            <select class="form-control" name="usuario">
+                {% for u in users %}
+                <option value="{{ u.id_usuario }}">{{ u.funcionarios }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <div class="form-group"></div>
             <label for="ponto">Ponto Físico</label>
-            <input type="text" class="form-control" id="ponto" name="ponto">
+            <select class="form-control" name="ponto">
+                {% for p in pontos %}
+                <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
+                {% endfor %}
+            </select>
         </div>
     
         <button type="submit" class="btn btn-primary margem">Salvar</button>

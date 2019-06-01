@@ -5,7 +5,7 @@ require_once 'DB.php';
 class UsuariosDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM usuarios_pontos";
+        $sql = "SELECT * FROM usuarios_pontos a INNER JOIN pontos_fisicos b ON a.adm_ponto=b.id_ponto";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);

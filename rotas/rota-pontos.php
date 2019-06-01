@@ -92,3 +92,16 @@ $app->post('/pontosAlterar/{id}', function ($request, $response, $args) {
     }
  
 })->setName('pontosAlterar');
+
+$app->get('/pontosDeletar/{id}', function ($request, $response, $args) {
+    
+    if ($_SESSION['logado']) {
+        $pontos = new PontosFisicosDAO();
+        $pontos->deletar($args['id']);
+        
+        return $response->withRedirect($this->router->pathFor('pontos'));
+    } else {
+        return $response->withRedirect($this->router->pathFor('login'));
+    }
+ 
+})->setName('pontosDeletar');

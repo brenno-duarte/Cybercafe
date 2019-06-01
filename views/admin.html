@@ -25,7 +25,6 @@
                 <tr>
                     <td>{{ users.id_admin }}</td>
                     <td>{{ users.usuario }}</td>
-                    <td>{{ users.senha }}</td>
                     <td>
                         <a href="{{ path_for('alterarAdmin', { 'id': users.id_admin }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('deletarAdmin', { 'id': users.id_admin }) }}" class="btn btn-outline-danger">Excluir</a>

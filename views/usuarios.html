@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{ users.id_usuario }}</td>
                     <td>{{ users.funcionarios }}</td>
-                    <td>{{ users.adm_ponto }}</td>
+                    <td>{{ users.nome_comercial }}</td>
                     <td>
                         <a href="{{ path_for('usuariosAlterar', { 'id': users.id_usuario }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('usuariosDeletar', { 'id': users.id_usuario }) }}" class="btn btn-outline-danger">Excluir</a>
