@@ -3,7 +3,7 @@
 {% block content %}
 
 <section class="margem">
-    <h1>Cadastrar Ponto</h1>
+    <h1>Cadastrar Produto</h1>
 
     <form method="POST" action="{{ path_for('produtosCadastro') }}">
         <div class="form-group">
@@ -29,6 +29,7 @@
         <div class="form-group">
             <label for="cliente">Cliente</label>
             <select class="form-control" name="cliente">
+                <option selected disabled>--selecione um cliente--</option>
                 {% for c in clientes %}
                 <option value="{{ c.id_cliente }}">{{ c.nome }}</option>
                 {% endfor %}

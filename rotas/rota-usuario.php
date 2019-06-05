@@ -89,10 +89,14 @@ $app->post('/usuariosAlterar/{id}', function ($request, $response, $args) {
 $app->get('/usuariosDeletar/{id}', function ($request, $response, $args) {
  
     if ($_SESSION['logado']) {
-        $usuariosDAO = new UsuariosDAO();
-        $usuariosDAO->deletar($args['id']);
+        try {
+            $usuariosDAO = new UsuariosDAO();
+            $usuariosDAO->deletar($args['id']);
 
-        return $response->withRedirect($this->router->pathFor('usuarios'));
+            return $response->withRedirect($this->router->pathFor('usuarios'));
+        } catch (PDOException $e) {
+            return $response->withRedirect($this->router->pathFor('erroChave'));
+        }
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }

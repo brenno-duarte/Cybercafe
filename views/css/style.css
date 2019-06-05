@@ -1,3 +1,14 @@
+body {
+    background-image: url("../img/back.jpg");
+}
+
+section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
 .margem {
     margin-top: 15px;
 }

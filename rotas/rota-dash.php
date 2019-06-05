@@ -16,8 +16,6 @@ $app->get('/dashboard', function ($request, $response, $args) {
         $res2 = $func->listarN();
         $res3 = $prod->listarN();
 
-        #print_r($res);
-
         return $this->view->render($response, 'dashboard.html', [
             'clientes' => $res1,
             'func' => $res2,
@@ -38,3 +36,13 @@ $app->get('/cloud', function ($request, $response, $args) {
     }
 
 })->setName('cloud');
+
+$app->get('/erroChave', function ($request, $response, $args) {
+
+    if ($_SESSION['logado']) {
+        return $this->view->render($response, 'errochave.html');
+    } else {
+        return $response->withRedirect($this->router->pathFor('login'));
+    }
+
+})->setName('erroChave');

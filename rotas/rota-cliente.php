@@ -1,4 +1,5 @@
 <?php
+use Dompdf\Exception;
 
 require 'DAO/ClientesDAO.php';
 require 'Model/Clientes.php';
@@ -99,10 +100,14 @@ $app->post('/AlterarClientes/{id}', function ($request, $response, $args) {
 $app->get('/DeletarCliente/{id}', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        $clienteDAO = new ClientesDAO();
-        $clienteDAO->deletar($args['id']);
-        
-        return $response->withRedirect($this->router->pathFor('clientes'));
+        try {
+            $clienteDAO = new ClientesDAO();
+            $clienteDAO->deletar($args['id']);
+            
+            return $response->withRedirect($this->router->pathFor('clientes'));
+        } catch (PDOException $e) {
+            return $response->withRedirect($this->router->pathFor('erroChave'));
+        }
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }

@@ -1,0 +1,43 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Cadastrar Venda</h1>
+
+    <form method="POST" action="{{ path_for('vendasCadastrar') }}">
+        <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <select class="form-control" name="empresa">
+                <option selected disabled>--selecione uma empresa--</option>
+                {% for e in empresa %}
+                <option value="{{ e.id_ponto }}">{{ e.nome_comercial }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cliente">Cliente</label>
+           <select class="form-control" name="cliente">
+                <option selected disabled>--selecione um cliente--</option>
+                {% for c in cliente %}
+                <option value="{{ c.id_cliente }}">{{ c.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="func">Funcionário</label>
+            <select class="form-control" name="func">
+                <option selected disabled>--selecione um funcionário--</option>
+                {% for f in func %}
+                <option value="{{ f.id_usuario }}">{{ f.funcionarios }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <button type="submit" class="btn btn-primary margem">Salvar</button>
+    </form>
+</section>
+
+{% endblock %}

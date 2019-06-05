@@ -17,6 +17,7 @@
         <div class="form-group">
             <label for="ponto">Ponto registrado</label>
             <select class="form-control" name="ponto">
+                <option selected disabled>--selecione um cliente--</option>
                 {% for p in pontos %}
                 <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
                 {% endfor %}

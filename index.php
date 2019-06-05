@@ -15,5 +15,6 @@ require 'rotas/rota-produtos.php';
 require 'rotas/rota-usuario.php';
 require 'rotas/rota-login.php';
 require 'rotas/rota-dash.php';
+require 'rotas/rota-vendas.php';
 
 $app->run();

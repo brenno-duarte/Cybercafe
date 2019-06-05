@@ -96,10 +96,14 @@ $app->post('/pontosAlterar/{id}', function ($request, $response, $args) {
 $app->get('/pontosDeletar/{id}', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        $pontos = new PontosFisicosDAO();
-        $pontos->deletar($args['id']);
-        
-        return $response->withRedirect($this->router->pathFor('pontos'));
+        try {
+            $pontos = new PontosFisicosDAO();
+            $pontos->deletar($args['id']);
+            
+            return $response->withRedirect($this->router->pathFor('pontos'));
+        } catch (PDOException $e) {
+            return $response->withRedirect($this->router->pathFor('erroChave'));
+        }
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }

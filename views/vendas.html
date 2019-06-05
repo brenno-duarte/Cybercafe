@@ -1,0 +1,42 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Vendas</h1>
+
+    <div>
+        <a href="{{ path_for('vendasCadastrar') }}" class="btn btn-success">Nova Venda</a>
+    </div>
+    
+    <div class="margem">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">Funcionário</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for valor in venda %}
+                <tr>
+                    <td>{{ valor.id_venda }}</td>
+                    <td>{{ valor.nome }}</td>
+                    <td>{{ valor.nome_comercial }}</td>
+                    <td>{{ valor.funcionarios }}</td>
+                    <td>
+                        <a href="{{ path_for('vendasAlterar', { 'id': valor.id_venda }) }}" class="btn btn-outline-secondary">Editar</a>
+                        <a href="{{ path_for('vendasDeletar', { 'id': valor.id_venda }) }}" class="btn btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
