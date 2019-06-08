@@ -8,8 +8,8 @@
     <form method="POST" action="{{ path_for('vendasCadastrar') }}">
         <div class="form-group">
             <label for="empresa">Empresa</label>
-            <select class="form-control" name="empresa">
-                <option selected disabled>--selecione uma empresa--</option>
+            <select class="form-control" name="empresa" id="empresa" required>
+                <option value="" selected disabled>--selecione uma empresa--</option>
                 {% for e in empresa %}
                 <option value="{{ e.id_ponto }}">{{ e.nome_comercial }}</option>
                 {% endfor %}
@@ -18,8 +18,8 @@
 
         <div class="form-group">
             <label for="cliente">Cliente</label>
-           <select class="form-control" name="cliente">
-                <option selected disabled>--selecione um cliente--</option>
+           <select class="form-control" name="cliente" required>
+                <option value="" selected disabled>--selecione um cliente--</option>
                 {% for c in cliente %}
                 <option value="{{ c.id_cliente }}">{{ c.nome }}</option>
                 {% endfor %}
@@ -28,11 +28,31 @@
 
         <div class="form-group">
             <label for="func">Funcionário</label>
-            <select class="form-control" name="func">
-                <option selected disabled>--selecione um funcionário--</option>
+            <select class="form-control" name="func" required>
+                <option value="" selected disabled>--selecione um funcionário--</option>
                 {% for f in func %}
                 <option value="{{ f.id_usuario }}">{{ f.funcionarios }}</option>
                 {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="func">Produto</label>
+            <select class="form-control" name="produtos" required>
+                <option value="" selected disabled>--selecione um produto--</option>
+                {% for p in prod %}
+                <option value="{{ p.id_produto }}">{{ p.nome_prod }} - R$ {{ p.preco }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="pag">Pagamento</label>
+            <select class="form-control" name="pag" required>
+                <option value="" selected disabled>--selecione um tipo de pagamento--</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Bitcoin">Bitcoin</option>
+                <option value="Cartão de crédito">Cartão de crédito</option>
             </select>
         </div>
     

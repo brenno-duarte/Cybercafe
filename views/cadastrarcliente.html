@@ -10,14 +10,16 @@
             <label for="Nome">Nome</label>
             <input type="text" class="form-control" id="Nome" name="nome" required>
         </div>
+
         <div class="form-group">
             <label for="CPF">CPF</label>
             <input type="text" class="form-control" id="CPF" name="cpf" required>
         </div>
+        
         <div class="form-group">
-            <label for="ponto">Ponto registrado</label>
-            <select class="form-control" name="ponto">
-                <option selected disabled>--selecione um cliente--</option>
+            <label for="ponto">Empresa</label>
+            <select class="form-control" name="ponto" required>
+                <option value="" selected disabled>--selecione uma empresa--</option>
                 {% for p in pontos %}
                 <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
                 {% endfor %}
@@ -25,7 +27,8 @@
         </div>
 
         <label for="vip">VIP</label>
-        <select class="form-control" name="vip">
+        <select class="form-control" name="vip" required>
+            <option value="" selected disabled>--selecione uma opção--</option>
             <option value="Sim">Sim</option>
             <option value="Nao">Não</option>
         </select>

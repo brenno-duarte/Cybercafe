@@ -19,7 +19,8 @@
                     <th scope="col">Tipo</th>
                     <th scope="col">Preço</th>
                     <th scope="col">Cliente</th>
-                    <th></th>
+                    <th>Empresa</th>
+                    <th>Funcionário</th>
                     <th></th>
                 </tr>
             </thead>
@@ -30,8 +31,10 @@
                     <td>{{ prod.nome_prod }}</td>
                     <td>{{ prod.categoria }}</td>
                     <td>{{ prod.tipo }}</td>
-                    <td>{{ prod.preco }}</td>
+                    <td>R$ {{ prod.preco }}</td>
                     <td>{{ prod.nome }}</td>
+                    <td>{{ prod.nome_comercial }}</td>
+                    <td>{{ prod.funcionarios }}</td>
                     <td>
                         <a href="{{ path_for('produtosAlterar', { 'id': prod.id_produto }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('produtosDeletar', { 'id': prod.id_produto }) }}" class="btn btn-outline-danger">Excluir</a>

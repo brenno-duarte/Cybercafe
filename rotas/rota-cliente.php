@@ -1,5 +1,4 @@
 <?php
-use Dompdf\Exception;
 
 require 'DAO/ClientesDAO.php';
 require 'Model/Clientes.php';
@@ -38,8 +37,9 @@ $app->get('/AlterarClientes/{id}', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
         $clienteDAO = new ClientesDAO();
+        $pontos = new PontosFisicosDAO();
         $res = $clienteDAO->listarUnico($args['id']);
-        $res2 = $clienteDAO->listar();
+        $res2 = $pontos->listar();
 
         return $this->view->render($response, 'alterarcliente.html', [
             'cliente' => $res,

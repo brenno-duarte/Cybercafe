@@ -1,0 +1,38 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Pagamento</h1>
+    
+    <div class="margem">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">Funcionário</th>
+                    <th scope="col">Produto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for valor in venda %}
+                <tr>
+                    <td>{{ valor.id_pag }}</td>
+                    <td>{{ valor.nome }}</td>
+                    <td>{{ valor.nome_comercial }}</td>
+                    <td>{{ valor.funcionarios }}</td>
+                    <td>{{ valor.nome_prod }}</td>
+                    <td>
+                        <a href="{{ path_for('realizarPag', { 'id': valor.id_pag }) }}" class="btn btn-outline-success">Efetuar pagamento</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

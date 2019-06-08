@@ -21,7 +21,12 @@ $app->get('/admin', function ($request, $response, $args) {
 $app->get('/cadastrarAdmin', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        return $this->view->render($response, 'cadastraradmin.html');
+        $empresa = new PontosFisicosDAO();
+        $res = $empresa->listar();
+
+        return $this->view->render($response, 'cadastraradmin.html', [
+            'empresa' => $res
+        ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }
@@ -33,9 +38,13 @@ $app->get('/alterarAdmin/{id}', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $admin = new AdministradoresDAO();
         $res = $admin->listarUnico($args['id']);
+
+        $empresa = new PontosFisicosDAO();
+        $res2 = $empresa->listar();
         
         return $this->view->render($response, 'alterarAdmin.html', [
-            'admin' => $res
+            'admin' => $res,
+            'empresa' => $res2
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
@@ -48,11 +57,13 @@ $app->post('/cadastrarAdmin', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $usuario = filter_input(INPUT_POST, 'usuario');
         $senha = filter_input(INPUT_POST, 'senha');
+        $empresa = filter_input(INPUT_POST, 'empresa');
 
         $admin = new AdministradoresDAO();
         $adminModel = new Administradores();
         $adminModel->setUsuario($usuario);
         $adminModel->setSenha($senha);
+        $adminModel->setEmpresa($empresa);
         $admin->salvar($adminModel);
         
         return $response->withRedirect($this->router->pathFor('admin'));
@@ -67,11 +78,13 @@ $app->post('/alterarAdmin/{id}', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $usuario = filter_input(INPUT_POST, 'usuario');
         $senha = filter_input(INPUT_POST, 'senha');
+        $empresa = filter_input(INPUT_POST, 'empresa');
 
         $admin = new AdministradoresDAO();
         $adminModel = new Administradores();
         $adminModel->setUsuario($usuario);
         $adminModel->setSenha($senha);
+        $adminModel->setEmpresa($empresa);
         $admin->alterar($adminModel, $args['id']);
         
         return $response->withRedirect($this->router->pathFor('admin'));

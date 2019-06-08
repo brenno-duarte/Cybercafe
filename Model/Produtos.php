@@ -7,6 +7,8 @@ class Produtos
     private $tipo;
     private $preco;
     private $cliente;
+    private $empresa;
+    private $funcionario;
 
     /**
      * Get the value of nome
@@ -104,6 +106,30 @@ class Produtos
     public function setCliente($cliente)
     {
         $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+
+    public function setEmpresa($empresa)
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    public function getFuncionario()
+    {
+        return $this->funcionario;
+    }
+ 
+    public function setFuncionario($funcionario)
+    {
+        $this->funcionario = $funcionario;
 
         return $this;
     }

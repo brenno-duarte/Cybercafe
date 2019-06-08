@@ -1,0 +1,43 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<section class="margem">
+    <h1>Efetuar Pagamento</h1>
+
+    <form method="POST" action="{{ path_for('realizarPag', {'id': pag.id_pag}) }}">
+        <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <input type="text" class="form-control" id="cliente" name="cliente" value="{{ pag.nome }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input type="text" class="form-control" id="empresa" name="empresa" value="{{ pag.nome_comercial }}" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="func">Funcionário</label>
+            <input type="text" class="form-control" id="func" name="func" value="{{ pag.funcionarios }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="produto">Produto</label>
+            <input type="text" class="form-control" id="produto" name="produto" value="{{ pag.nome_prod }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="pag">Tipo de pagamento</label>
+            <select class="form-control" name="pag" required>
+                <option value="" selected disabled>--selecione um pagamento--</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Bitcoin">Bitcoin</option>
+                <option value="Carteira virtual">Carteira virtual</option>
+            </select>
+        </div>
+    
+        <button type="submit" class="btn btn-primary margem">Salvar</button>
+    </form>
+</section>
+
+{% endblock %}

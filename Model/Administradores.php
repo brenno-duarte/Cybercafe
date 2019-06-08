@@ -4,6 +4,7 @@ class Administradores
 {
     private $usuario;
     private $senha;
+    private $empresa;
 
     /**
      * Get the value of usuario
@@ -41,6 +42,19 @@ class Administradores
     public function setSenha($senha)
     {
         $this->senha = $senha;
+
+        return $this;
+    }
+
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+
+    
+    public function setEmpresa($empresa)
+    {
+        $this->empresa = $empresa;
 
         return $this;
     }

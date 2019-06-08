@@ -17,7 +17,8 @@
                     <th scope="col">Cliente</th>
                     <th scope="col">Empresa</th>
                     <th scope="col">Funcionário</th>
-                    <th></th>
+                    <th scope="col">Produto</th>
+                    <th>Pagamento</th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,6 +29,8 @@
                     <td>{{ valor.nome }}</td>
                     <td>{{ valor.nome_comercial }}</td>
                     <td>{{ valor.funcionarios }}</td>
+                    <td>{{ valor.nome_prod }}</td>
+                    <td>{{ valor.pagamento }}</td>
                     <td>
                         <a href="{{ path_for('vendasAlterar', { 'id': valor.id_venda }) }}" class="btn btn-outline-secondary">Editar</a>
                         <a href="{{ path_for('vendasDeletar', { 'id': valor.id_venda }) }}" class="btn btn-outline-danger">Excluir</a>

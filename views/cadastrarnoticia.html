@@ -16,8 +16,8 @@
         </div>
         <div class="form-group">
             <label for="usuario">Usuário</label>
-            <select class="form-control" name="usuario">
-                <option selected disabled>--selecione um funcionário--</option>
+            <select class="form-control" name="usuario" required>
+                <option value="" selected disabled>--selecione um funcionário--</option>
                 {% for u in users %}
                 <option value="{{ u.id_usuario }}">{{ u.funcionarios }}</option>
                 {% endfor %}
@@ -26,8 +26,8 @@
 
         <div class="form-group"></div>
             <label for="ponto">Ponto Físico</label>
-            <select class="form-control" name="ponto">
-                <option selected disabled>--selecione um ponto físico--</option>
+            <select class="form-control" name="ponto" required>
+                <option value="" selected disabled>--selecione um ponto físico--</option>
                 {% for p in pontos %}
                 <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
                 {% endfor %}

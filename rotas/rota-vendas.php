@@ -21,15 +21,18 @@ $app->get('/vendasCadastrar', function($request, $response){
     	$empresa = new PontosFisicosDAO();
     	$cliente = new ClientesDAO();
     	$func = new UsuariosDAO();
+        $produto = new ProdutosDAO();
 
     	$res1 = $empresa->listar();
     	$res2 = $cliente->listar();
     	$res3 = $func->listar();
+        $res4 = $produto->listar();
         
         return $this->view->render($response, 'vendascadastro.html', [
         	'empresa' => $res1,
         	'cliente' => $res2,
-        	'func' => $res3
+        	'func' => $res3,
+            'prod' => $res4
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
@@ -41,10 +44,12 @@ $app->get('/vendasAlterar/{id}', function($request, $response, $args){
        	$empresa = new PontosFisicosDAO();
     	$cliente = new ClientesDAO();
     	$func = new UsuariosDAO();
+        $produto = new ProdutosDAO();
 
     	$res1 = $empresa->listar();
     	$res2 = $cliente->listar();
     	$res3 = $func->listar();
+        $res4 = $produto->listar();
 
        	$venda = new VendasDAO();
     	$res = $venda->listarUnico($args['id']);
@@ -53,34 +58,34 @@ $app->get('/vendasAlterar/{id}', function($request, $response, $args){
         	'vendas' => $res,
         	'empresa' => $res1,
         	'cliente' => $res2,
-        	'func' => $res3
+        	'func' => $res3,
+            'prod' => $res4
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }
 })->setName('vendasAlterar');
 
-
-
-
-
-
 $app->post('/vendasCadastrar', function($request, $response){
 	if ($_SESSION['logado']) {
-    	$empresa = filter_input(INPUT_POST, 'empresa');
-    	$cliente = filter_input(INPUT_POST, 'cliente');
-    	$func = filter_input(INPUT_POST, 'func');
-    	
+        
+        $empresa = filter_input(INPUT_POST, 'empresa');
+        $cliente = filter_input(INPUT_POST, 'cliente');
+        $func = filter_input(INPUT_POST, 'func');
+        $produtos = filter_input(INPUT_POST, 'produtos');
+        $pag = filter_input(INPUT_POST, 'pag');
+        
         $vendas = new Vendas();
         $vendasDAO = new VendasDAO();
-
         $vendas->setCliente($cliente);
         $vendas->setEmpresa($empresa);
         $vendas->setFuncionario($func);
-
+        $vendas->setProduto($produtos);
+        $vendas->setPagamento($pag);
         $vendasDAO->salvar($vendas);
 
         return $response->withRedirect($this->router->pathFor('vendas'));
+        
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }
@@ -94,11 +99,14 @@ $app->post('/vendasAlterar/{id}', function($request, $response, $args){
     	$empresa = filter_input(INPUT_POST, 'empresa');
     	$cliente = filter_input(INPUT_POST, 'cliente');
     	$func = filter_input(INPUT_POST, 'func');
+        $produtos = filter_input(INPUT_POST, 'produtos');
+        $pag = filter_input(INPUT_POST, 'pag');
     	
         $vendas->setCliente($cliente);
         $vendas->setEmpresa($empresa);
         $vendas->setFuncionario($func);
-
+        $vendas->setProduto($produtos);
+        $vendas->setPagamento($pag);
         $vendasDAO->alterar($vendas, $args['id']);
 
         return $response->withRedirect($this->router->pathFor('vendas'));

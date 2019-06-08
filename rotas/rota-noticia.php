@@ -1,5 +1,4 @@
 <?php
-use Dompdf\Exception;
 
 require 'DAO/NoticiasDAO.php';
 require 'Model/Noticias.php';

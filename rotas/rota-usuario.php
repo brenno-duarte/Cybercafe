@@ -39,8 +39,12 @@ $app->get('/usuariosAlterar/{id}', function ($request, $response, $args) {
         $usuariosDAO = new UsuariosDAO();
         $res = $usuariosDAO->listarUnico($args['id']);
 
+        $pontos = new PontosFisicosDAO();
+        $res2 = $pontos->listar();
+
         return $this->view->render($response, 'alterarusuario.html', [
-            'users' => $res
+            'users' => $res,
+            'pontos' => $res2
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));

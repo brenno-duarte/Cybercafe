@@ -1,231 +1,397 @@
-CREATE DATABASE  IF NOT EXISTS `cybercafe` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `cybercafe`;
--- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.6.6deb5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1    Database: cybercafe
--- ------------------------------------------------------
--- Server version	5.7.26-0ubuntu0.18.04.1
+-- Host: localhost:3306
+-- Generation Time: 08-Jun-2019 às 15:24
+-- Versão do servidor: 5.7.26-0ubuntu0.18.04.1
+-- PHP Version: 7.2.19-0ubuntu0.18.04.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `administradores`
+-- Database: `cybercafe`
 --
 
-DROP TABLE IF EXISTS `administradores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `vendas_pag` (`pCliente` INT, `pEmpresa` INT, `pFunc` INT, `pProdutos` INT)  BEGIN
+	INSERT INTO `vendas`(`cliente`, `empresa`, `func`, `produtos`) 
+    VALUES (pCliente, pEmpresa, pFunc, pProdutos);
+    
+    INSERT INTO `pagamentos`(`cliente`, `empresa`, `func`, `produtos`) 
+    VALUES (pCliente, pEmpresa, pFunc, pProdutos);
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `administradores`
+--
+
 CREATE TABLE `administradores` (
-  `id_admin` int(11) NOT NULL AUTO_INCREMENT,
+  `id_admin` int(11) NOT NULL,
   `usuario` varchar(50) NOT NULL,
   `senha` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_admin`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `empresa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `administradores`
+-- Extraindo dados da tabela `administradores`
 --
 
-LOCK TABLES `administradores` WRITE;
-/*!40000 ALTER TABLE `administradores` DISABLE KEYS */;
-INSERT INTO `administradores` VALUES (7,'admin','admin');
-/*!40000 ALTER TABLE `administradores` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `administradores` (`id_admin`, `usuario`, `senha`, `empresa`) VALUES
+(8, 'hugo_s', 'thepower', 5),
+(9, 'brenno', 'brenno', 6),
+(10, 'admin', 'admin', NULL),
+(11, 'admin', 'admin', 7);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `clientes_pontos`
+-- Estrutura da tabela `clientes_pontos`
 --
 
-DROP TABLE IF EXISTS `clientes_pontos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `clientes_pontos` (
-  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `cpf` varchar(50) NOT NULL,
   `ponto_registrado` int(11) NOT NULL,
-  `vip` varchar(30) NOT NULL,
-  PRIMARY KEY (`id_cliente`),
-  KEY `fk_ponto_idx` (`ponto_registrado`),
-  CONSTRAINT `fk_clientes_pontos_1` FOREIGN KEY (`ponto_registrado`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `vip` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `clientes_pontos`
+-- Extraindo dados da tabela `clientes_pontos`
 --
 
-LOCK TABLES `clientes_pontos` WRITE;
-/*!40000 ALTER TABLE `clientes_pontos` DISABLE KEYS */;
-INSERT INTO `clientes_pontos` VALUES (5,'cherno alpha','072.291.163-76',5,'Sim'),(6,'jovem','072.291.163-76',5,'Nao');
-/*!40000 ALTER TABLE `clientes_pontos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `clientes_pontos` (`id_cliente`, `nome`, `cpf`, `ponto_registrado`, `vip`) VALUES
+(5, 'Pedro Silva', '123.132.123-08', 6, 'Sim'),
+(7, 'Hugo Silva', '567.567.565-79', 5, 'Nao'),
+(8, 'Brenno Duarte de Lima', '111.222.333.44', 7, 'Sim'),
+(9, 'Maria Matos Moura Matias', '234.234.234-98', 6, 'Nao'),
+(10, 'Marcio Lima Duarte', '098.123.123-45', 6, 'Sim'),
+(11, 'Igor Ferreira', '234.234.234-73', 5, 'Nao'),
+(12, 'AlibabÃ¡ Mohamed', 'yet-dsfd-asdf-76', 5, 'Nao');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `noticias_empresa`
+-- Estrutura da tabela `noticias_empresa`
 --
 
-DROP TABLE IF EXISTS `noticias_empresa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `noticias_empresa` (
-  `id_noticia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_noticia` int(11) NOT NULL,
   `noticia` varchar(255) NOT NULL,
   `dta_noticia` date DEFAULT NULL,
   `usuario` int(11) NOT NULL,
-  `ponto_fisico` int(11) NOT NULL,
-  PRIMARY KEY (`id_noticia`),
-  KEY `fk_noticias_empresa_1_idx` (`ponto_fisico`),
-  KEY `fk_noticias_empresa_2_idx` (`usuario`),
-  CONSTRAINT `fk_noticias_empresa_1` FOREIGN KEY (`ponto_fisico`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_noticias_empresa_2` FOREIGN KEY (`usuario`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `ponto_fisico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `noticias_empresa`
+-- Extraindo dados da tabela `noticias_empresa`
 --
 
-LOCK TABLES `noticias_empresa` WRITE;
-/*!40000 ALTER TABLE `noticias_empresa` DISABLE KEYS */;
-INSERT INTO `noticias_empresa` VALUES (4,'novo hamburger feito de cuzcuz','2019-06-18',10,5);
-/*!40000 ALTER TABLE `noticias_empresa` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `noticias_empresa` (`id_noticia`, `noticia`, `dta_noticia`, `usuario`, `ponto_fisico`) VALUES
+(4, 'novo hamburger feito de cuzcuz', '2019-06-18', 10, 5);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `pontos_fisicos`
+-- Estrutura da tabela `pagamentos`
 --
 
-DROP TABLE IF EXISTS `pontos_fisicos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pagamentos` (
+  `id_pag` int(11) NOT NULL,
+  `cliente` int(11) DEFAULT NULL,
+  `empresa` int(11) DEFAULT NULL,
+  `func` int(11) DEFAULT NULL,
+  `produtos` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `pagamentos`
+--
+
+INSERT INTO `pagamentos` (`id_pag`, `cliente`, `empresa`, `func`, `produtos`) VALUES
+(2, 5, 6, 10, 3),
+(3, 8, 7, 10, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pontos_fisicos`
+--
+
 CREATE TABLE `pontos_fisicos` (
-  `id_ponto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_ponto` int(11) NOT NULL,
   `cnpj` varchar(30) NOT NULL,
   `nome_comercial` varchar(100) NOT NULL,
   `tipo` varchar(30) NOT NULL,
   `contrato` varchar(50) NOT NULL,
-  `maquinas_ativas` varchar(30) NOT NULL,
-  PRIMARY KEY (`id_ponto`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `maquinas_ativas` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pontos_fisicos`
+-- Extraindo dados da tabela `pontos_fisicos`
 --
 
-LOCK TABLES `pontos_fisicos` WRITE;
-/*!40000 ALTER TABLE `pontos_fisicos` DISABLE KEYS */;
-INSERT INTO `pontos_fisicos` VALUES (5,'123456789','oracle','Grande','VIP','800'),(6,'456456','udemy','Medio','Simples','13');
-/*!40000 ALTER TABLE `pontos_fisicos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `pontos_fisicos` (`id_ponto`, `cnpj`, `nome_comercial`, `tipo`, `contrato`, `maquinas_ativas`) VALUES
+(5, '123123123-x', 'CafÃ© com Sabor', 'Pequeno', 'Simples', '10'),
+(6, '9864882-y', 'VÃ³ Lila', 'Pequeno', 'VIP', '2'),
+(7, '121342342341', 'CyberCafe  Â©', 'Medio', 'VIP', '200');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `produtos`
+-- Estrutura da tabela `produtos`
 --
 
-DROP TABLE IF EXISTS `produtos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produtos` (
-  `id_produto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produto` int(11) NOT NULL,
   `nome_prod` varchar(50) NOT NULL,
   `categoria` varchar(50) NOT NULL,
   `tipo` varchar(50) NOT NULL,
   `preco` double NOT NULL,
   `cliente` int(11) NOT NULL,
-  PRIMARY KEY (`id_produto`),
-  KEY `fk_produtos_1_idx` (`cliente`),
-  CONSTRAINT `fk_produtos_1` FOREIGN KEY (`cliente`) REFERENCES `clientes_pontos` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `funcionario` int(11) DEFAULT NULL,
+  `empresa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `produtos`
+-- Extraindo dados da tabela `produtos`
 --
 
-LOCK TABLES `produtos` WRITE;
-/*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (3,'skol beats','bebidas','bebida',29,5);
-/*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `produtos` (`id_produto`, `nome_prod`, `categoria`, `tipo`, `preco`, `cliente`, `funcionario`, `empresa`) VALUES
+(3, 'CafÃ© Late Machiatto', 'bebidas', 'Cafeteria e derivados', 5, 5, 12, 6),
+(4, 'Sonho Recheado com amor', 'PÃ£es e Doces', 'Comum', 5.5, 5, 12, 5),
+(5, 'teset', 'teset', 'teset', 89, 5, NULL, NULL);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios_pontos`
+-- Estrutura da tabela `usuarios_pontos`
 --
 
-DROP TABLE IF EXISTS `usuarios_pontos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios_pontos` (
-  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
   `funcionarios` varchar(100) NOT NULL,
-  `adm_ponto` int(11) NOT NULL,
-  PRIMARY KEY (`id_usuario`),
-  KEY `fk_usuarios_pontos_1_idx` (`adm_ponto`),
-  CONSTRAINT `fk_usuarios_pontos_1` FOREIGN KEY (`adm_ponto`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `adm_ponto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuarios_pontos`
+-- Extraindo dados da tabela `usuarios_pontos`
 --
 
-LOCK TABLES `usuarios_pontos` WRITE;
-/*!40000 ALTER TABLE `usuarios_pontos` DISABLE KEYS */;
-INSERT INTO `usuarios_pontos` VALUES (10,'hugo',5);
-/*!40000 ALTER TABLE `usuarios_pontos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `usuarios_pontos` (`id_usuario`, `funcionarios`, `adm_ponto`) VALUES
+(10, 'Jeff Bezos', 6),
+(11, 'JosÃ© Maria', 6),
+(12, 'Marcos Lima', 5),
+(13, 'Jeniffer Ferreira', 6),
+(14, 'Steve Jobs', 7),
+(15, 'Wilson', 6);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `vendas`
+-- Estrutura da tabela `vendas`
 --
 
-DROP TABLE IF EXISTS `vendas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vendas` (
-  `id_venda` int(11) NOT NULL AUTO_INCREMENT,
+  `id_venda` int(11) NOT NULL,
   `cliente` int(11) DEFAULT NULL,
   `empresa` int(11) DEFAULT NULL,
   `func` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_venda`),
-  KEY `fk_vendas_1_idx` (`cliente`),
-  KEY `fk_vendas_2_idx` (`empresa`),
-  KEY `fk_vendas_3_idx` (`func`),
-  CONSTRAINT `fk_vendas_cliente` FOREIGN KEY (`cliente`) REFERENCES `clientes_pontos` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vendas_empresa` FOREIGN KEY (`empresa`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vendas_usuario` FOREIGN KEY (`func`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `produtos` int(11) DEFAULT NULL,
+  `pagamento` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `vendas`
+-- Extraindo dados da tabela `vendas`
 --
 
-LOCK TABLES `vendas` WRITE;
-/*!40000 ALTER TABLE `vendas` DISABLE KEYS */;
-INSERT INTO `vendas` VALUES (2,NULL,5,NULL),(3,5,5,10);
-/*!40000 ALTER TABLE `vendas` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `vendas` (`id_venda`, `cliente`, `empresa`, `func`, `produtos`, `pagamento`) VALUES
+(27, 8, 6, 11, 3, 'CartÃ£o de crÃ©dito'),
+(28, 9, 5, 12, 4, 'Bitcoin'),
+(29, 5, 6, 15, 3, 'Dinheiro');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `administradores`
+--
+ALTER TABLE `administradores`
+  ADD PRIMARY KEY (`id_admin`),
+  ADD KEY `fk_administradores_empresa_idx` (`empresa`);
+
+--
+-- Indexes for table `clientes_pontos`
+--
+ALTER TABLE `clientes_pontos`
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD KEY `fk_ponto_idx` (`ponto_registrado`);
+
+--
+-- Indexes for table `noticias_empresa`
+--
+ALTER TABLE `noticias_empresa`
+  ADD PRIMARY KEY (`id_noticia`),
+  ADD KEY `fk_noticias_empresa_1_idx` (`ponto_fisico`),
+  ADD KEY `fk_noticias_empresa_2_idx` (`usuario`);
+
+--
+-- Indexes for table `pagamentos`
+--
+ALTER TABLE `pagamentos`
+  ADD PRIMARY KEY (`id_pag`),
+  ADD KEY `fk_pagamentos_cli_idx` (`cliente`),
+  ADD KEY `fk_pagamentos_emp_idx` (`empresa`),
+  ADD KEY `fk_pagamentos_func_idx` (`func`),
+  ADD KEY `fk_pagamentos_prod_idx` (`produtos`);
+
+--
+-- Indexes for table `pontos_fisicos`
+--
+ALTER TABLE `pontos_fisicos`
+  ADD PRIMARY KEY (`id_ponto`);
+
+--
+-- Indexes for table `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id_produto`),
+  ADD KEY `fk_produtos_1_idx` (`cliente`),
+  ADD KEY `fk_produtos_func_idx` (`funcionario`),
+  ADD KEY `fk_produtos_2_idx` (`empresa`);
+
+--
+-- Indexes for table `usuarios_pontos`
+--
+ALTER TABLE `usuarios_pontos`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `fk_usuarios_pontos_1_idx` (`adm_ponto`);
+
+--
+-- Indexes for table `vendas`
+--
+ALTER TABLE `vendas`
+  ADD PRIMARY KEY (`id_venda`),
+  ADD KEY `fk_vendas_1_idx` (`cliente`),
+  ADD KEY `fk_vendas_2_idx` (`empresa`),
+  ADD KEY `fk_vendas_3_idx` (`func`),
+  ADD KEY `fk_vendas_prod_idx` (`produtos`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `administradores`
+--
+ALTER TABLE `administradores`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `clientes_pontos`
+--
+ALTER TABLE `clientes_pontos`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `noticias_empresa`
+--
+ALTER TABLE `noticias_empresa`
+  MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `pagamentos`
+--
+ALTER TABLE `pagamentos`
+  MODIFY `id_pag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pontos_fisicos`
+--
+ALTER TABLE `pontos_fisicos`
+  MODIFY `id_ponto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `usuarios_pontos`
+--
+ALTER TABLE `usuarios_pontos`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT for table `vendas`
+--
+ALTER TABLE `vendas`
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `administradores`
+--
+ALTER TABLE `administradores`
+  ADD CONSTRAINT `fk_administradores_empresa` FOREIGN KEY (`empresa`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `clientes_pontos`
+--
+ALTER TABLE `clientes_pontos`
+  ADD CONSTRAINT `fk_clientes_pontos_1` FOREIGN KEY (`ponto_registrado`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `noticias_empresa`
+--
+ALTER TABLE `noticias_empresa`
+  ADD CONSTRAINT `fk_noticias_empresa_1` FOREIGN KEY (`ponto_fisico`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_noticias_empresa_2` FOREIGN KEY (`usuario`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `pagamentos`
+--
+ALTER TABLE `pagamentos`
+  ADD CONSTRAINT `fk_pagamentos_cli` FOREIGN KEY (`cliente`) REFERENCES `clientes_pontos` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pagamentos_emp` FOREIGN KEY (`empresa`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pagamentos_func` FOREIGN KEY (`func`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pagamentos_prod` FOREIGN KEY (`produtos`) REFERENCES `produtos` (`id_produto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD CONSTRAINT `fk_produtos_1` FOREIGN KEY (`cliente`) REFERENCES `clientes_pontos` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_produtos_2` FOREIGN KEY (`empresa`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_produtos_func` FOREIGN KEY (`funcionario`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `usuarios_pontos`
+--
+ALTER TABLE `usuarios_pontos`
+  ADD CONSTRAINT `fk_usuarios_pontos_1` FOREIGN KEY (`adm_ponto`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `vendas`
+--
+ALTER TABLE `vendas`
+  ADD CONSTRAINT `fk_vendas_cliente` FOREIGN KEY (`cliente`) REFERENCES `clientes_pontos` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_vendas_empresa` FOREIGN KEY (`empresa`) REFERENCES `pontos_fisicos` (`id_ponto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_vendas_prod` FOREIGN KEY (`produtos`) REFERENCES `produtos` (`id_produto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_vendas_usuario` FOREIGN KEY (`func`) REFERENCES `usuarios_pontos` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2019-06-04 23:32:45

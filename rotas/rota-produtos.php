@@ -22,10 +22,17 @@ $app->get('/produtosCadastro', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
         $clienteDAO = new ClientesDAO();
+        $empresa = new PontosFisicosDAO();
+        $func = new UsuariosDAO();
+
         $res = $clienteDAO->listar();
+        $res2 = $empresa->listar();
+        $res3 = $func->listar();
 
         return $this->view->render($response, 'cadastrarproduto.html', [
-            'clientes' => $res
+            'clientes' => $res,
+            'empresa' => $res2,
+            'func' => $res3
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
@@ -38,12 +45,18 @@ $app->get('/produtosAlterar/{id}', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $prodDAO = new ProdutosDAO();
         $clienteDAO = new ClientesDAO();
+        $empresa = new PontosFisicosDAO();
+        $func = new UsuariosDAO();
         $res = $prodDAO->listarUnico($args['id']);
         $res2 = $clienteDAO->listar();
-        
+        $res3 = $empresa->listar();
+        $res4 = $func->listar();
+
         return $this->view->render($response, 'alterarproduto.html', [
             'prod' => $res,
-            'clientes' => $res2
+            'clientes' => $res2,
+            'empresa' => $res3,
+            'func' => $res4
         ]);
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
@@ -59,6 +72,8 @@ $app->post('/produtosCadastro', function ($request, $response, $args) {
         $tipo = filter_input(INPUT_POST, 'tipo');
         $preco = filter_input(INPUT_POST, 'preco');
         $cliente = filter_input(INPUT_POST, 'cliente');
+        $empresa = filter_input(INPUT_POST, 'empresa');
+        $func = filter_input(INPUT_POST, 'func');
 
         $prod = new Produtos();
         $prodDAO = new ProdutosDAO();
@@ -67,6 +82,8 @@ $app->post('/produtosCadastro', function ($request, $response, $args) {
         $prod->setTipo($tipo);
         $prod->setPreco($preco);
         $prod->setCliente($cliente);
+        $prod->setFuncionario($func);
+        $prod->setEmpresa($empresa);
         $prodDAO->salvar($prod);
         
         return $response->withRedirect($this->router->pathFor('produtos'));
@@ -84,6 +101,8 @@ $app->post('/produtosAlterar/{id}', function ($request, $response, $args) {
         $tipo = filter_input(INPUT_POST, 'tipo');
         $preco = filter_input(INPUT_POST, 'preco');
         $cliente = filter_input(INPUT_POST, 'cliente');
+        $empresa = filter_input(INPUT_POST, 'empresa');
+        $func = filter_input(INPUT_POST, 'func');
 
         $prod = new Produtos();
         $prodDAO = new ProdutosDAO();
@@ -92,6 +111,8 @@ $app->post('/produtosAlterar/{id}', function ($request, $response, $args) {
         $prod->setTipo($tipo);
         $prod->setPreco($preco);
         $prod->setCliente($cliente);
+        $prod->setFuncionario($func);
+        $prod->setEmpresa($empresa);
         $prodDAO->alterar($prod, $args['id']);
         
         return $response->withRedirect($this->router->pathFor('produtos'));
@@ -104,10 +125,14 @@ $app->post('/produtosAlterar/{id}', function ($request, $response, $args) {
 $app->get('/produtosDeletar/{id}', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        $prodDAO = new ProdutosDAO();
-        $prodDAO->deletar($args['id']);
-        
-        return $response->withRedirect($this->router->pathFor('produtos'));
+        try {
+            $prodDAO = new ProdutosDAO();
+            $prodDAO->deletar($args['id']);
+            
+            return $response->withRedirect($this->router->pathFor('produtos'));
+        } catch (PDOException $e) {
+            return $response->withRedirect($this->router->pathFor('erroChave'));
+        }
     } else {
         return $response->withRedirect($this->router->pathFor('login'));
     }

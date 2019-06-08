@@ -5,7 +5,9 @@ require_once 'DB.php';
 class ProdutosDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM produtos a INNER JOIN clientes_pontos b ON a.cliente=b.id_cliente";
+        $sql = "SELECT * FROM produtos a INNER JOIN clientes_pontos b INNER JOIN usuarios_pontos c 
+        INNER JOIN pontos_fisicos d ON a.cliente=b.id_cliente
+        AND a.funcionario=c.id_usuario AND a.empresa=d.id_ponto";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -32,14 +34,16 @@ class ProdutosDAO extends DB
     }
 
     public function salvar(Produtos $produtos){
-        $sql = "INSERT INTO `produtos`(`nome_prod`, `categoria`, `tipo`, `preco`, `cliente`) 
-        VALUES (:nome_prod, :categoria, :tipo, :preco, :cliente)";
+        $sql = "INSERT INTO `produtos`(`nome_prod`, `categoria`, `tipo`, `preco`, `cliente`, `funcionario`, `empresa`) 
+        VALUES (:nome_prod, :categoria, :tipo, :preco, :cliente, :funcionario, :empresa)";
         $stmt = DB::prepare($sql);
         $stmt->bindValue(':nome_prod', $produtos->getNome());
         $stmt->bindValue(':categoria', $produtos->getCategoria());
         $stmt->bindValue(':tipo', $produtos->getTipo());
         $stmt->bindValue(':preco', $produtos->getPreco());
         $stmt->bindValue(':cliente', $produtos->getCliente());
+        $stmt->bindValue(':funcionario', $produtos->getFuncionario());
+        $stmt->bindValue(':empresa', $produtos->getEmpresa());
         $stmt->execute();
     }
 
@@ -49,13 +53,18 @@ class ProdutosDAO extends DB
        `categoria` = :categoria,
        `tipo` = :tipo,
        `preco` = :preco,
-       `cliente` = :cliente WHERE id_produto = $id";
+       `cliente` = :cliente,
+       `funcionario` = :funcionario,
+       `empresa` = :empresa
+        WHERE id_produto = $id";
         $stmt = DB::prepare($sql);
         $stmt->bindValue(':nome_prod', $produtos->getNome());
         $stmt->bindValue(':categoria', $produtos->getCategoria());
         $stmt->bindValue(':tipo', $produtos->getTipo());
         $stmt->bindValue(':preco', $produtos->getPreco());
         $stmt->bindValue(':cliente', $produtos->getCliente());
+        $stmt->bindValue(':funcionario', $produtos->getFuncionario());
+        $stmt->bindValue(':empresa', $produtos->getEmpresa());
         $stmt->execute();
     }
 

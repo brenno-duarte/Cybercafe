@@ -4,6 +4,8 @@ class vendas {
 	private $cliente;
 	private $empresa;
 	private $funcionario;
+	private $produto;
+	private $pagamento;
 
 	public function getCliente(){
 		return $this->cliente;
@@ -28,4 +30,33 @@ class vendas {
 	public function setFuncionario($funcionario){
 		$this->funcionario = $funcionario;
 	}
+
+	public function getProduto(){
+		return $this->produto;
+	}
+
+	public function setProduto($produto){
+		$this->produto = $produto;
+	}
+
+	/**
+	 * Get the value of pagamento
+	 */ 
+	public function getPagamento()
+	{
+		return $this->pagamento;
+	}
+
+	/**
+	 * Set the value of pagamento
+	 *
+	 * @return  self
+	 */ 
+	public function setPagamento($pagamento)
+	{
+		$this->pagamento = $pagamento;
+
+		return $this;
+	}
+	
 }

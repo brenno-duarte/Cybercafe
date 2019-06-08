@@ -37,6 +37,16 @@ $app->get('/cloud', function ($request, $response, $args) {
 
 })->setName('cloud');
 
+$app->get('/credito', function ($request, $response, $args) {
+
+    if ($_SESSION['logado']) {
+        return $this->view->render($response, 'credito.html');
+    } else {
+        return $response->withRedirect($this->router->pathFor('login'));
+    }
+
+})->setName('credito');
+
 $app->get('/erroChave', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {

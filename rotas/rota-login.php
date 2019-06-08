@@ -4,7 +4,7 @@ require_once 'DAO/AdministradoresDAO.php';
 require_once 'Model/Administradores.php';
 
 $app->get('/', function ($request, $response, $args) {
-    return $response->withRedirect($this->router->pathFor('login'));
+    return $response->withRedirect($this->router->pathFor('login'), 302);
 })->setName('inicio');
 
 $app->get('/login', function ($request, $response, $args) {
@@ -24,7 +24,7 @@ $app->post('/login', function ($request, $response, $args) {
     if ($admin->login($adminModel)) {
         return $response->withRedirect($this->router->pathFor('dashboard'));
     } else {
-        return $response->withRedirect($this->router->pathFor('login'));
+        return $response->withRedirect($this->router->pathFor('login'), 302);
     }
 
 })->setName('login');

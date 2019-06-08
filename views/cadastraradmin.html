@@ -14,6 +14,16 @@
             <label for="senha">Senha</label>
             <input type="password" class="form-control" id="senha" name="senha" required>
         </div>
+
+        <div class="form-group">
+            <label for="senha">Nome da empresa</label>
+            <select class="form-control" name="empresa" required>
+                <option value="" selected disabled>--selecione uma empresa--</option>
+                {% for e in empresa %}
+                <option value="{{ e.id_ponto }}">{{ e.nome_comercial }}</option>
+                {% endfor %}
+            </select>
+        </div>
     
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>

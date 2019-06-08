@@ -7,13 +7,13 @@
 
     <form method="POST" action="{{ path_for('usuariosAlterar', {'id': users.id_usuario}) }}">
         <div class="form-group">
-            <label for="func">Funcionário</label>
+            <label for="func">Nome do Funcionário</label>
             <input type="text" class="form-control" id="func" name="func" value="{{ users.funcionarios }}" required>
         </div>
         <div class="form-group">
-            <label for="ponto">ADM Ponto</label>
-            <select class="form-control" name="ponto">
-                <option selected disabled>--selecione um ponto físico--</option>
+            <label for="ponto">Empresa</label>
+            <select class="form-control" name="ponto" required>
+                <option value="" selected disabled>--selecione um ponto físico--</option>
                 {% for p in pontos %}
                 <option value="{{ p.id_ponto }}">{{ p.nome_comercial }}</option>
                 {% endfor %}
