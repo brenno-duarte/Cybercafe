@@ -19,9 +19,8 @@
         <div class="form-group">
             <label for="senha">Nome da empresa</label>
             <select class="form-control" name="empresa" required>
-                <option value="" selected disabled>--selecione uma empresa--</option>
                 {% for e in empresa %}
-                <option value="{{ e.id_ponto }}">{{ e.nome_comercial }}</option>
+                <option>{{ e.nome_comercial }}</option>
                 {% endfor %}
             </select>
         </div>
