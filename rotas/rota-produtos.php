@@ -7,7 +7,7 @@ $app->get('/produtos', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
         $prodDAO = new ProdutosDAO();
-        $res = $prodDAO->listar();
+        $res = $prodDAO->listar($_SESSION['logado']);
 
         return $this->view->render($response, 'produtos.html', [
             'produtos' => $res
@@ -22,8 +22,8 @@ $app->get('/produtosCadastro', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
         $clienteDAO = new ClientesDAO();
-        $empresa = new PontosFisicosDAO();
-        $func = new UsuariosDAO();
+        $empresa = new EmpresaDAO();
+        $func = new FuncionariosDAO();
 
         $res = $clienteDAO->listar();
         $res2 = $empresa->listar();
@@ -45,8 +45,8 @@ $app->get('/produtosAlterar/{id}', function ($request, $response, $args) {
     if ($_SESSION['logado']) {
         $prodDAO = new ProdutosDAO();
         $clienteDAO = new ClientesDAO();
-        $empresa = new PontosFisicosDAO();
-        $func = new UsuariosDAO();
+        $empresa = new EmpresaDAO();
+        $func = new FuncionariosDAO();
         $res = $prodDAO->listarUnico($args['id']);
         $res2 = $clienteDAO->listar();
         $res3 = $empresa->listar();
@@ -72,7 +72,7 @@ $app->post('/produtosCadastro', function ($request, $response, $args) {
         $tipo = filter_input(INPUT_POST, 'tipo');
         $preco = filter_input(INPUT_POST, 'preco');
         $cliente = filter_input(INPUT_POST, 'cliente');
-        $empresa = filter_input(INPUT_POST, 'empresa');
+        #$empresa = filter_input(INPUT_POST, 'empresa');
         $func = filter_input(INPUT_POST, 'func');
 
         $prod = new Produtos();
@@ -83,7 +83,7 @@ $app->post('/produtosCadastro', function ($request, $response, $args) {
         $prod->setPreco($preco);
         $prod->setCliente($cliente);
         $prod->setFuncionario($func);
-        $prod->setEmpresa($empresa);
+        $prod->setEmpresa($_SESSION['logado']);
         $prodDAO->salvar($prod);
         
         return $response->withRedirect($this->router->pathFor('produtos'));

@@ -5,7 +5,7 @@ require_once 'DB.php';
 class AdministradoresDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM administradores a INNER JOIN pontos_fisicos b ON a.empresa=b.id_ponto";
+        $sql = "SELECT * FROM administradores a INNER JOIN empresa b ON a.empresa=b.id_ponto";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -14,15 +14,18 @@ class AdministradoresDAO extends DB
     }
 
     public function login(Administradores $admin){
-        $sql = "SELECT * FROM administradores WHERE usuario = :usuario AND senha = :senha";
+        $sql = "SELECT * FROM administradores a INNER JOIN empresa b 
+        ON a.empresa=b.id_ponto WHERE a.usuario = :usuario AND a.senha = :senha";
         $stmt = DB::prepare($sql);
         $stmt->bindValue(':usuario', $admin->getUsuario());
         $stmt->bindValue(':senha', $admin->getSenha());
         $stmt->execute();
         $res = $stmt->rowCount();
+        $res2 = $stmt->fetch(PDO::FETCH_OBJ);
+        $empresa = $res2->id_ponto;
 
         if ($res > 0) {
-            $_SESSION['logado'] = true;
+            $_SESSION['logado'] = $empresa;
             return true;
         } else {
             return false;

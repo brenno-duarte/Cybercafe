@@ -2,10 +2,10 @@
 
 require_once 'DB.php';
 
-class UsuariosDAO extends DB
+class FuncionariosDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM usuarios_pontos a INNER JOIN pontos_fisicos b ON a.adm_ponto=b.id_ponto";
+        $sql = "SELECT * FROM funcionarios a INNER JOIN empresa b ON a.adm_ponto=b.id_ponto";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -14,7 +14,7 @@ class UsuariosDAO extends DB
     }
 
     public function listarN(){
-        $sql = "SELECT COUNT(*) as qnt FROM usuarios_pontos";
+        $sql = "SELECT COUNT(*) as qnt FROM funcionarios";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +23,7 @@ class UsuariosDAO extends DB
     }
 
     public function listarUnico(int $id){
-        $sql = "SELECT * FROM usuarios_pontos WHERE id_usuario = $id";
+        $sql = "SELECT * FROM funcionarios WHERE id_usuario = $id";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_OBJ);
@@ -32,7 +32,7 @@ class UsuariosDAO extends DB
     }
 
     public function salvar(Usuarios $usuarios){
-        $sql = "INSERT INTO `usuarios_pontos`(`funcionarios`, `adm_ponto`) VALUES (:funcionarios, :adm_ponto)";
+        $sql = "INSERT INTO `funcionarios`(`funcionarios`, `adm_ponto`) VALUES (:funcionarios, :adm_ponto)";
         $stmt = DB::prepare($sql);
         $stmt->bindValue(':funcionarios', $usuarios->getFuncionarios());
         $stmt->bindValue(':adm_ponto', $usuarios->getAdm_ponto());
@@ -40,7 +40,7 @@ class UsuariosDAO extends DB
     }
 
     public function alterar(Usuarios $usuarios, int $id){
-        $sql = "UPDATE `usuarios_pontos` SET 
+        $sql = "UPDATE `funcionarios` SET 
         `funcionarios` = :funcionarios,
         `adm_ponto` = :adm_ponto
         WHERE id_usuario = $id";
@@ -51,7 +51,7 @@ class UsuariosDAO extends DB
     }
 
     public function deletar(int $id){
-        $sql = "DELETE FROM `usuarios_pontos` WHERE id_usuario = $id";
+        $sql = "DELETE FROM `funcionarios` WHERE id_usuario = $id";
         $stmt = DB::prepare($sql);
         $stmt->execute();
     }

@@ -1,12 +1,12 @@
 <?php
 
-require 'DAO/PontosFisicosDAO.php';
-require 'Model/PontosFisicos.php';
+require 'DAO/EmpresaDAO.php';
+require 'Model/Empresa.php';
 
 $app->get('/pontos', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        $pontos = new PontosFisicosDAO();
+        $pontos = new EmpresaDAO();
         $res = $pontos->listar();
 
         return $this->view->render($response, 'pontos.html', [
@@ -31,7 +31,7 @@ $app->get('/pontosCadastrar', function ($request, $response, $args) {
 $app->get('/pontosAlterar/{id}', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        $pontos = new PontosFisicosDAO();
+        $pontos = new EmpresaDAO();
         $res = $pontos->listarUnico($args['id']);
         
         return $this->view->render($response, 'alterarponto.html', [
@@ -52,8 +52,8 @@ $app->post('/pontosCadastrar', function ($request, $response, $args) {
         $contrato = filter_input(INPUT_POST, 'contrato');
         $maquinas = filter_input(INPUT_POST, 'maquinas');
 
-        $pontos = new PontosFisicosDAO();
-        $pontosModel = new PontosFisicos();
+        $pontos = new EmpresaDAO();
+        $pontosModel = new Empresa();
         $pontosModel->setCnpj($cnpj);
         $pontosModel->setNome_comercial($comercial);
         $pontosModel->setTipo($tipo);
@@ -77,8 +77,8 @@ $app->post('/pontosAlterar/{id}', function ($request, $response, $args) {
         $contrato = filter_input(INPUT_POST, 'contrato');
         $maquinas = filter_input(INPUT_POST, 'maquinas');
 
-        $pontos = new PontosFisicosDAO();
-        $pontosModel = new PontosFisicos();
+        $pontos = new EmpresaDAO();
+        $pontosModel = new Empresa();
         $pontosModel->setCnpj($cnpj);
         $pontosModel->setNome_comercial($comercial);
         $pontosModel->setTipo($tipo);
@@ -97,7 +97,7 @@ $app->get('/pontosDeletar/{id}', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
         try {
-            $pontos = new PontosFisicosDAO();
+            $pontos = new EmpresaDAO();
             $pontos->deletar($args['id']);
             
             return $response->withRedirect($this->router->pathFor('pontos'));

@@ -21,6 +21,8 @@ $app->post('/login', function ($request, $response, $args) {
     $adminModel->setUsuario($usuario);
     $adminModel->setSenha($senha);
 
+    #$admin->login($adminModel);
+
     if ($admin->login($adminModel)) {
         return $response->withRedirect($this->router->pathFor('dashboard'));
     } else {

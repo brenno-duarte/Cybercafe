@@ -1,6 +1,6 @@
 <?php
 
-class PontosFisicos
+class Empresa
 {
     private $cnpj;
     private $nome_comercial;

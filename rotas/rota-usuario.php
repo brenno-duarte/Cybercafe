@@ -1,12 +1,12 @@
 <?php
 
-require 'DAO/UsuariosDAO.php';
-require 'Model/Usuarios.php';
+require 'DAO/FuncionariosDAO.php';
+require 'Model/Funcionarios.php';
 
 $app->get('/usuarios', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        $usuariosDAO = new UsuariosDAO();
+        $usuariosDAO = new FuncionariosDAO();
         $res = $usuariosDAO->listar();
 
         return $this->view->render($response, 'usuarios.html', [
@@ -21,7 +21,7 @@ $app->get('/usuarios', function ($request, $response, $args) {
 $app->get('/usuariosCadastro', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
-        $pontos = new PontosFisicosDAO();
+        $pontos = new EmpresaDAO();
         $res = $pontos->listar();
 
         return $this->view->render($response, 'cadastrarusuario.html', [
@@ -36,10 +36,10 @@ $app->get('/usuariosCadastro', function ($request, $response, $args) {
 $app->get('/usuariosAlterar/{id}', function ($request, $response, $args) {
 
     if ($_SESSION['logado']) {
-        $usuariosDAO = new UsuariosDAO();
+        $usuariosDAO = new FuncionariosDAO();
         $res = $usuariosDAO->listarUnico($args['id']);
 
-        $pontos = new PontosFisicosDAO();
+        $pontos = new EmpresaDAO();
         $res2 = $pontos->listar();
 
         return $this->view->render($response, 'alterarusuario.html', [
@@ -58,8 +58,8 @@ $app->post('/usuariosCadastro', function ($request, $response, $args) {
         $func = filter_input(INPUT_POST, 'func');
         $ponto = filter_input(INPUT_POST, 'ponto');
 
-        $usuarios = new Usuarios();
-        $usuariosDAO = new UsuariosDAO();
+        $usuarios = new Funcionarios();
+        $usuariosDAO = new FuncionariosDAO();
         $usuarios->setFuncionarios($func);
         $usuarios->setAdm_ponto($ponto);
         $usuariosDAO->salvar($usuarios);
@@ -77,8 +77,8 @@ $app->post('/usuariosAlterar/{id}', function ($request, $response, $args) {
         $func = filter_input(INPUT_POST, 'func');
         $ponto = filter_input(INPUT_POST, 'ponto');
 
-        $usuarios = new Usuarios();
-        $usuariosDAO = new UsuariosDAO();
+        $usuarios = new Funcionarios();
+        $usuariosDAO = new FuncionariosDAO();
         $usuarios->setFuncionarios($func);
         $usuarios->setAdm_ponto($ponto);
         $usuariosDAO->alterar($usuarios, $args['id']);
@@ -94,7 +94,7 @@ $app->get('/usuariosDeletar/{id}', function ($request, $response, $args) {
  
     if ($_SESSION['logado']) {
         try {
-            $usuariosDAO = new UsuariosDAO();
+            $usuariosDAO = new FuncionariosDAO();
             $usuariosDAO->deletar($args['id']);
 
             return $response->withRedirect($this->router->pathFor('usuarios'));

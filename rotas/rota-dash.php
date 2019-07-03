@@ -2,14 +2,15 @@
 
 require_once 'DAO/ClientesDAO.php';
 require_once 'DAO/ProdutosDAO.php';
-require_once 'DAO/UsuariosDAO.php';
+require_once 'DAO/FuncionariosDAO.php';
 
 $app->get('/dashboard', function ($request, $response, $args) {
     
     if ($_SESSION['logado']) {
 
+        var_dump($_SESSION);
         $cliente = new ClientesDAO();
-        $func = new UsuariosDAO();
+        $func = new FuncionariosDAO();
         $prod = new ProdutosDAO();
 
         $res1 = $cliente->listarN();

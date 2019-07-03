@@ -4,10 +4,10 @@ require_once 'DB.php';
 
 class ProdutosDAO extends DB
 {
-    public function listar(){
-        $sql = "SELECT * FROM produtos a INNER JOIN clientes_pontos b INNER JOIN usuarios_pontos c 
-        INNER JOIN pontos_fisicos d ON a.cliente=b.id_cliente
-        AND a.funcionario=c.id_usuario AND a.empresa=d.id_ponto";
+    public function listar($id_login){
+        $sql = "SELECT * FROM produtos a INNER JOIN clientes_pontos b INNER JOIN funcionarios c 
+        INNER JOIN empresa d ON a.cliente=b.id_cliente
+        AND a.funcionario=c.id_usuario AND a.empresa=d.id_ponto AND d.id_ponto=$id_login";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);

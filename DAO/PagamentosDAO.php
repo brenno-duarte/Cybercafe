@@ -5,8 +5,8 @@ require_once 'DB.php';
 class PagamentosDAO extends DB
 {
 	public function listar(){
-        $sql = "SELECT * FROM pagamentos a INNER JOIN clientes_pontos b inner join pontos_fisicos c 
-        inner join usuarios_pontos d INNER JOIN produtos e
+        $sql = "SELECT * FROM pagamentos a INNER JOIN clientes_pontos b inner join empresa c 
+        inner join funcionarios d INNER JOIN produtos e
         on a.cliente=b.id_cliente and a.empresa=c.id_ponto and a.func=d.id_usuario 
         and a.produtos=e.id_produto";
         $stmt = DB::prepare($sql);
@@ -26,8 +26,8 @@ class PagamentosDAO extends DB
     }
 
     public function listarUnico(int $id){
-        $sql = "SELECT * FROM pagamentos a INNER JOIN clientes_pontos b inner join pontos_fisicos c 
-        inner join usuarios_pontos d INNER JOIN produtos e
+        $sql = "SELECT * FROM pagamentos a INNER JOIN clientes_pontos b inner join empresa c 
+        inner join funcionarios d INNER JOIN produtos e
         on a.cliente=b.id_cliente and a.empresa=c.id_ponto and a.func=d.id_usuario 
         and a.produtos=e.id_produto WHERE id_pag = $id";
         $stmt = DB::prepare($sql);

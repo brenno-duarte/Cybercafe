@@ -2,10 +2,10 @@
 
 require_once 'DB.php';
 
-class PontosFisicosDAO extends DB
+class EmpresaDAO extends DB
 {
     public function listar(){
-        $sql = "SELECT * FROM pontos_fisicos";
+        $sql = "SELECT * FROM empresa";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -14,7 +14,7 @@ class PontosFisicosDAO extends DB
     }
 
     public function listarUnico(int $id){
-        $sql = "SELECT * FROM pontos_fisicos WHERE id_ponto = $id";
+        $sql = "SELECT * FROM empresa WHERE id_ponto = $id";
         $stmt = DB::prepare($sql);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_OBJ);
@@ -22,8 +22,8 @@ class PontosFisicosDAO extends DB
         return $res;
     }
 
-    public function salvar(PontosFisicos $pontos){
-        $sql = "INSERT INTO `pontos_fisicos`(`cnpj`, `nome_comercial`, `tipo`, `contrato`, `maquinas_ativas`) 
+    public function salvar(Empresa $pontos){
+        $sql = "INSERT INTO `empresa`(`cnpj`, `nome_comercial`, `tipo`, `contrato`, `maquinas_ativas`) 
         VALUES (:cnpj, :nome_comercial, :tipo, :contrato, :maquinas_ativas)";
         $stmt = DB::prepare($sql);
         $stmt->bindValue(':cnpj', $pontos->getCnpj());
@@ -34,8 +34,8 @@ class PontosFisicosDAO extends DB
         $stmt->execute();
     }
 
-    public function alterar(PontosFisicos $pontos, int $id){
-        $sql = "UPDATE `pontos_fisicos` SET 
+    public function alterar(Empresa $pontos, int $id){
+        $sql = "UPDATE `empresa` SET 
         `cnpj` = :cnpj,
         `nome_comercial` = :nome_comercial,
         `tipo` = :tipo,
@@ -51,7 +51,7 @@ class PontosFisicosDAO extends DB
     }
 
     public function deletar(int $id){
-        $sql = "DELETE FROM `pontos_fisicos` WHERE id_ponto = $id";
+        $sql = "DELETE FROM `empresa` WHERE id_ponto = $id";
         $stmt = DB::prepare($sql);
         $stmt->execute();
     }
