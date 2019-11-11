@@ -7,7 +7,7 @@ class DB {
     public static function conexao(){
         if (!isset(self::$con)) {
             try {
-                self::$con = new PDO("mysql:host=localhost;dbname=cybercafe", "root", "");
+                self::$con = new PDO("mysql:host=localhost;dbname=cybercafe", "brenno", "123");
                 self::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 return self::$con;
             } catch (PDOException $e) {
